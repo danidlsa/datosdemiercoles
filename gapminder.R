@@ -21,11 +21,9 @@ gral <- gral + xlab ("PBI per cápita") + ylab ("Esperanza de vida")
 gral
 
 #Animación - se puede usar también transition_time, uso transition_states para obtener números sin decimales en el título
-gral_t <- gral + transition_states(states = anio, transition_length=1, state_length = 1,
-                                    wrap=TRUE) +
-  labs(title="Año: {closest_state}") +  
+gral_t <- gral + transition_time(anio) +
+  labs(title="Año: {round(frame_time)}") +  
   shadow_wake(wake_length = 0.1, alpha = FALSE)
-
 
 gral_t
 

@@ -1,4 +1,4 @@
-#Relación entre esperanza de vida y GDP por cápita según continente y año
+#RelaciÃ³n entre esperanza de vida y GDP por cÃ¡pita segÃºn continente y aÃ±o
 
 #install.packages("readr")
 #install.packages("gganimate")
@@ -10,23 +10,25 @@ library (ggplot2)
 library (gganimate)
 library (png)
 
+#Data
 gapminder <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-04-24/gapminder_es.csv")
 
-
+#Ggplot estÃ¡tico para usar como base
 gral <- ggplot(gapminder, aes(x = pib_per_capita, y=esperanza_de_vida, size = poblacion, 
                            col = pais)) + geom_point(show.legend = FALSE) +
   facet_wrap(~continente)
-gral <- gral + xlab ("PBI per cápita") + ylab ("Esperanza de vida")
+gral <- gral + xlab ("PBI per cÃ¡pita") + ylab ("Esperanza de vida")
 gral
 
-
+#AnimaciÃ³n - se puede usar tambiÃ©n transition_time, uso transition_states para obtener nÃºmeros sin decimales en el tÃ­tulo
 gral_t <- gral + transition_states(states = anio, transition_length=1, state_length = 1,
                                     wrap=TRUE) +
-  labs(title="Año: {closest_state}") +  
+  labs(title="AÃ±o: {closest_state}") +  
   shadow_wake(wake_length = 0.1, alpha = FALSE)
 
 
 gral_t
 
+#Save
 anim_save('gral_t.gif')
 

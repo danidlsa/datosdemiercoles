@@ -1,10 +1,10 @@
-#Exportaciones de Alimentos en América Latina
+#Exportaciones de Alimentos en SudamÃ©rica
 
 #install.packages("waffle")
 library (ggplot2)
 library(waffle)
 
-#datos - reduzco a países de sudamérica y a la exportación de alimentos
+#datos - reduzco a paÃ­ses de sudamÃ©rica y a la exportaciÃ³n de alimentos
 
 comercio <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-05-01/comercio_hispanoamerica_mundo_agregado.csv")
 
@@ -16,7 +16,7 @@ sudamerica <- subset (alimentos,
                         nombre_pais_origen=="Chile" |
                         nombre_pais_origen=="Colombia" |
                         nombre_pais_origen=="Paraguay" |
-                        nombre_pais_origen=="Perú" |
+                        nombre_pais_origen=="PerÃº" |
                         nombre_pais_origen=="Uruguay" |
                         nombre_pais_origen=="Venezuela"
                       )
@@ -24,8 +24,8 @@ sudamerica <- subset (alimentos,
 v <- aggregate (valor_exportado_dolares~anio+nombre_pais_origen, data=sudamerica, sum)
 v
 
-# para utilizar el paquete waffle versión 0.7.0 (la disponible en CRAN), se debe convertir la información que está en formato data.frame a un vector
-#hago un vector por año
+# para utilizar el paquete waffle versiÃ³n 0.7.0 (la disponible en CRAN), se debe convertir la informaciÃ³n que estÃ¡ en formato data.frame a un vector
+#hago un vector por aÃ±o
 
 #2016
 
@@ -35,10 +35,10 @@ lista_16 <- v2016$valor_exportado_dolares
 names(lista_16) <- v2016$nombre_pais_origen
 lista_16
 
-#gráfico waffle
+#grÃ¡fico waffle
 
 wa16 <- waffle(lista_16/100000000, rows=8, size=1.2, title="2016", 
-             xlab="Cada unidad equivale a 100 millones de dólares exportados")
+             xlab="Cada unidad equivale a 100 millones de dÃ³lares exportados")
 wa16 <- wa16 + theme(legend.position="none")
 wa16
 
@@ -50,7 +50,7 @@ names(lista_15) <- v2015$nombre_pais_origen
 lista_15
 
 wa15 <- waffle(lista_15/100000000, rows=8, size=1.2, title="2015", 
-               xlab="Cada unidad equivale a 100 millones de dólares exportados")
+               xlab="Cada unidad equivale a 100 millones de dÃ³lares exportados")
 wa15 <- wa15 + theme(legend.position="none")
 wa15
 
@@ -62,7 +62,7 @@ names(lista_14) <- v2014$nombre_pais_origen
 lista_14
 
 wa14 <- waffle(lista_14/100000000, rows=8, size=1.2, title="2014", 
-               xlab="Cada unidad equivale a 100 millones de dólares exportados")
+               xlab="Cada unidad equivale a 100 millones de dÃ³lares exportados")
 wa14 <- wa14 + theme(legend.position="none")
 wa14
 
@@ -73,19 +73,19 @@ names(lista_13) <- v2013$nombre_pais_origen
 lista_13
 
 wa13 <- waffle(lista_13/100000000, rows=8, size=1.2, title="2013", 
-               xlab="Cada unidad equivale a 100 millones de dólares exportados")
+               xlab="Cada unidad equivale a 100 millones de dÃ³lares exportados")
 wa13 <- wa13 + theme(legend.position="none")
 wa13
 
-#este último waffle es para que aparezcan las referencias en la visualización y no sea necesario que aparezcan para cada gráfico, ni que cambien el tamaño de ninguno
-#alerta: solución casera!
+#este Ãºltimo waffle es para que aparezcan las referencias en la visualizaciÃ³n y no sea necesario que aparezcan para cada grÃ¡fico, ni que cambien el tamaÃ±o de ninguno
+#alerta: soluciÃ³n casera!
 
 ref <- waffle (lista_13/100000000, rows=1)
 ref <- ref + theme(legend.position="top")
 ref
 
-##dado que esta versión de waffle no permite utilizar data.frames, tenemos un gráfico para cada año. 
-#utilizo la siguiente función para colocarlos a los 4 en la misma imagen:
+##dado que esta versiÃ³n de waffle no permite utilizar data.frames, tenemos un grÃ¡fico para cada aÃ±o. 
+#utilizo la siguiente funciÃ³n para colocarlos a los 4 en la misma imagen:
 
 # Multiple plot function
 #

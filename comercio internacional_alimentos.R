@@ -136,6 +136,6 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 
 #save
 
-png("graph.png", width = 1024, height = 768)
+png("graph.png", width = 480, height = 640)
 multiplot(wa13, wa14, wa15, wa16, ref, cols=1)
 dev.off()

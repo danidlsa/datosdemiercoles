@@ -1,4 +1,4 @@
-setwd("C:/Users/USUARIO/Dropbox/datos de miércoles")
+setwd("C:/Users/USUARIO/Dropbox/datos de miÃ©rcoles")
 
 datos_uip <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-05-08/datos_uip.csv")
 
@@ -8,7 +8,7 @@ library(ggplot2)
 library(ggpol)
 library(gganimate)
 
-#reestructuración de los datos para usar paquete ggpol
+#reestructuraciÃ³n de los datos para usar paquete ggpol
 
 
 datos_uip$mujeres <- round((datos_uip$numero_integrantes*datos_uip$porcentaje_mujeres)/100)
@@ -24,57 +24,57 @@ m <- aggregate (mujeres~pais, data=datos_selec, sum)
 m$Sexo <- "mujeres"
 h<- aggregate (hombres~pais, data=datos_selec, sum)
 h$Sexo <- "hombres"
-colnames(m) <- c("País", "Bancas", "Sexo")
-colnames(h) <- c("País", "Bancas", "Sexo")
+colnames(m) <- c("PaÃ­s", "Bancas", "Sexo")
+colnames(h) <- c("PaÃ­s", "Bancas", "Sexo")
 cuota <- aggregate (cuota_genero~pais, data=datos_selec, max)
-colnames(cuota) <- c("País", "Ley de cuota de género")
+colnames(cuota) <- c("PaÃ­s", "Ley de cuota de gÃ©nero")
 p <- rbind.data.frame (m, h)
 p$Color <- ifelse(p$Sexo=="mujeres", "purple", "yellow")
 
-p <- p [order(p$País),] 
-cuota <- cuota[order(cuota$País),]
-p <- merge(p, cuota, by.y="País")
-p<- p [order(p$País),]
+p <- p [order(p$PaÃ­s),] 
+cuota <- cuota[order(cuota$PaÃ­s),]
+p <- merge(p, cuota, by.y="PaÃ­s")
+p<- p [order(p$PaÃ­s),]
 
-#gráficos
+#grÃ¡ficos
 
 plot_1  <- ggplot(p) + 
   geom_arcbar(aes(shares = Bancas,r0=5, r1=10, fill = Sexo)) + 
-  scale_fill_manual(values = p$Color, labels = p$Sexo) +
-  coord_fixed() + labs(caption = "@danidlsa para #datosdemiércoles") +
+  scale_fill_manual(values = p$Color) +
+  coord_fixed() + labs(caption = "@danidlsa para #datosdemiÃ©rcoles") +
   theme_void() + 
   theme(strip.text.x=element_text(size=10)) +
-  ggtitle ("Cantidad de bancas en Cámara Baja según sexo") +
+  ggtitle ("Cantidad de bancas en CÃ¡mara Baja segÃºn sexo") +
   theme (plot.title = element_text(size=16, hjust = 0.5, face="bold"))
 plot_1
 
-plot_1 + facet_wrap(~País)
+plot_1 + facet_wrap(~PaÃ­s)
 
-#separo según cuota de género
+#separo segÃºn cuota de gÃ©nero
 
-p_sincuota <- subset(p, `Ley de cuota de género`=="No")
-p_concuota <- subset(p, `Ley de cuota de género`=="Sí")
+p_sincuota <- subset(p, `Ley de cuota de gÃ©nero`=="No")
+p_concuota <- subset(p, `Ley de cuota de gÃ©nero`=="SÃ­")
 
 plot_2 <- ggplot(p_sincuota) + 
   geom_arcbar(aes(shares = Bancas,r0=5, r1=10, fill = Sexo)) + 
-  scale_fill_manual(values = p_sincuota$Color, labels = p_sincuota$Sexo) +
-  coord_fixed() + labs(cap = "@danidlsa para #datosdemiércoles") +
+  scale_fill_manual(values = p_sincuota$Color) +
+  coord_fixed() + 
   theme_void() + 
   theme(strip.text.x=element_text(size=10)) +
-  ggtitle ("Países sin Ley de cuotas") +
+  ggtitle ("PaÃ­ses sin Ley de cuotas") +
   theme (plot.title = element_text(size=16, hjust = 0.5, face="bold")) +
-  facet_wrap(~País) + theme(legend.position="right")
+  facet_wrap(~PaÃ­s) + theme(legend.position="right")
 plot_2
 
 plot_3 <- ggplot(p_concuota) + 
   geom_arcbar(aes(shares = Bancas,r0=5, r1=10, fill = Sexo)) + 
-  scale_fill_manual(values = p_concuota$Color, labels = p_concuota$Sexo) +
-  coord_fixed() + labs(cap = "@danidlsa para #datosdemiércoles") +
+  scale_fill_manual(values = p_concuota$Color) +
+  coord_fixed() + 
   theme_void() + 
   theme(strip.text.x=element_text(size=10)) +
-  ggtitle ("Países con Ley de cuotas") +
+  ggtitle ("PaÃ­ses con Ley de cuotas") +
   theme (plot.title = element_text(size=16, hjust = 0.5, face="bold")) +
-  facet_wrap(~País) + theme(legend.position="")
+  facet_wrap(~PaÃ­s) + theme(legend.position="")
 plot_3
 
 

@@ -1,4 +1,3 @@
-setwd("C:/Users/USUARIO/Dropbox/datos de miércoles")
 
 datos_uip <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-05-08/datos_uip.csv")
 

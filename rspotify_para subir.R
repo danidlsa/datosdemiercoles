@@ -8,24 +8,24 @@ library(stringi)
 library(stringr)
 library(tidyverse)
 
-########### Extraer Top 50 ############
+########### Extraer Top 50 ############ - el c√≥digo original para extraer el top 50 es de https://github.com/cienciadedatos/datos-de-miercoles
 
-#reemplazar keys con valores que correspondan antes de correr cÛdigo
+#reemplazar keys con valores que correspondan antes de correr c√≥digo
 
 keys <- spotifyOAuth(app_id="XXX",client_id="XXX", client_secret="XXX")
 
-#OJO, para que funcione la autenticaciÛn, en la API - edit settings - redirect url puse http://localhost:1410/
-#eso recomendaban ac·: https://www.r-bloggers.com/my-new-r-package/
+#OJO, para que funcione la autenticaci√≥n, en la API - edit settings - redirect url puse http://localhost:1410/
+#eso recomendaban ac√°: https://www.r-bloggers.com/my-new-r-package/
 
 paises_es <- c("Argentina", "Bolivia", "Chile", "Colombia", "Costa Rica",
                "Cuba","la Republica Dominicana", "Dominican Republic",
-               "Ecuador", "El Salvador", "Equatorial Guinea", "EspaÒa",
-               "Guatemala", "Honduras", "MÈxico", "Nicaragua", "Panam·",
-               "Paraguay", "Per˙", "Puerto Rico", "Uruguay", "Venezuela")
+               "Ecuador", "El Salvador", "Equatorial Guinea", "Espa√±a",
+               "Guatemala", "Honduras", "M√©xico", "Nicaragua", "Panam√°",
+               "Paraguay", "Per√∫", "Puerto Rico", "Uruguay", "Venezuela")
 user_playlists_1 <- getPlaylists("qn9el801z6l32l2whymqqs18p", token = keys)
 user_playlists_2 <- getPlaylists("qn9el801z6l32l2whymqqs18p", 50, token = keys)
 tops_50 <- rbind(user_playlists_1, user_playlists_2)
-# encontrÈ aparte el de venezuela que no estaba incluido
+# encontr√© aparte el de venezuela que no estaba incluido
 tops_50 <- rbind(tops_50, c("624oAiyjMdmpdJWIylharU", "El Top 50 de Venezuela", "suo2sbl91eeth3elwrfuq7qwn", 50))
 
 paises <- purrr::map_chr(tops_50$name, ~ str_remove(.x, "El Top 50 de "))
@@ -77,7 +77,7 @@ colnames(dataset_spotify) <- nombres_columnas
 uruguay <- subset(dataset_spotify, top_pais=="El Top 50 de Uruguay")
 View(uruguay)
 
-#EXTRAIGO MEDIAS POR PAÕS DE BAILABILIDAD, ENERGÕA, POSITIVIDAD, MODO, POPULARIDAD
+#EXTRAIGO MEDIAS POR PA√çS DE BAILABILIDAD, ENERG√çA, POSITIVIDAD, MODO, POPULARIDAD
 
 bailables_paises <- aggregate(bailabilidad~top_pais, data=dataset_spotify, mean)
 bailables_paises
@@ -148,14 +148,14 @@ g1
 dev.off()
 
 
-#MODO Menor - Es m·s popular en Uruguay! Por quÈ? Porque somos unos inherentemente depresivos?
+#MODO Menor - Es m√°s popular en Uruguay! Por qu√©? Porque somos unos inherentemente depresivos?
 
 t$modo_menor <- 1-t$modo
 
 g3 <- ggplot (t, aes(x = reorder(top_pais, modo_menor),y= modo_menor)) + 
   geom_bar(stat="identity") +
   coord_flip() + ylab ("% de canciones en modo menor") + 
-  xlab("PaÌs") +   theme(axis.title=element_text(size=12), 
+  xlab("Pa√≠s") +   theme(axis.title=element_text(size=12), 
                          axis.text=element_text(size=12)) + 
   scale_y_continuous(labels=scales::percent)
 
@@ -164,7 +164,7 @@ png("canciones modo menor.png", height=600, width=600)
 g3
 dev.off()
 
-##exploraciÛn de canciones en modo menor de Uruguay, Venezuela (en el otro extremo), y Argentina (øno tendrÌamos gustos musicales parecidos?)
+##exploraci√≥n de canciones en modo menor de Uruguay, Venezuela (en el otro extremo), y Argentina (¬øno tendr√≠amos gustos musicales parecidos?)
 
 uruguay_menor <- subset(uruguay, modo==0)
 
@@ -198,7 +198,7 @@ for (i in uruguay_menor$artista) {
 
 artistas.urumenor <- aggregate(artista~genres, data=datosArtistas.urumenor, first)
 
-#comparaciÛn venezuela
+#comparaci√≥n venezuela
 
 venezuela <- subset(dataset_spotify, top_pais=="El Top 50 de Venezuela")
 venezuela$artista
@@ -224,7 +224,7 @@ argentina <- subset(dataset_spotify, top_pais=="El Top 50 de Argentina")
 View(argentina)
 
 
-argentina$artista[argentina$artista=="ROSALÕA"]<-"Rosalia" #La palabra ROSALÕA me hacÌa saltar un error...
+argentina$artista[argentina$artista=="ROSAL√çA"]<-"Rosalia" #La palabra ROSAL√çA me hac√≠a saltar un error...
 
 datosArtistas.arg <- data.frame()
 for (i in argentina$artista) {
@@ -247,7 +247,7 @@ for (i in argentina_menor$artista) {
 artistas.argmenor <- aggregate(artista~genres, data=datosArtistas.argmenor, first)
 
 
-##Recodifico los gÈneros
+##Recodifico los g√©neros
 
 grepl("trap",artistas.urumenor$genres)
 
@@ -265,7 +265,7 @@ artistas.uru$genero_rec <- ifelse(
                 ifelse(grepl("pop", artistas.uru$genres)==T, "Pop", "Otro")))
 )
 
-#gÈneros argentina
+#g√©neros argentina
 
 artistas.arg$genero_rec <- ifelse(
   grepl("trap", artistas.arg$genres)==T, "Trap", 
@@ -302,7 +302,7 @@ canciones_por_artista_uru_menor <- aggregate(uno~artista, data=uruguay_menor, su
 artistas.urumenor <- merge(artistas.urumenor, canciones_por_artista_uru_menor, by=c("artista"), all.x=TRUE)
 
 gg <-ggplot (artistas.urumenor, aes(x=genero_rec, y=uno, fill=genero_rec)) + 
-  geom_bar(stat="identity", position="stack") + xlab("GÈnero musical") + ylab("Cantidad de canciones en top 50") +
+  geom_bar(stat="identity", position="stack") + xlab("G√©nero musical") + ylab("Cantidad de canciones en top 50") +
   ggtitle("Uruguay: canciones en modo menor") + theme(legend.position="", 
                                                       axis.text=element_text(size=12), 
                                                       axis.title=element_text(size=12)) +
@@ -317,7 +317,7 @@ canciones_por_artista_arg_menor <- aggregate(uno~artista, data=argentina_menor, 
 artistas.argmenor <- merge(artistas.argmenor, canciones_por_artista_arg_menor, by=c("artista"), all.x=TRUE)
 
 gg2 <-ggplot (artistas.argmenor, aes(x=genero_rec, y=uno, fill=genero_rec)) + 
-  geom_bar(stat="identity", position="stack") + xlab("GÈnero musical") + ylab("Cantidad de canciones en top 50") +
+  geom_bar(stat="identity", position="stack") + xlab("G√©nero musical") + ylab("Cantidad de canciones en top 50") +
   ggtitle("Argentina: canciones en modo menor") + theme(legend.position="", 
                                                         axis.text=element_text(size=12), 
                                                         axis.title=element_text(size=12)) +
@@ -333,7 +333,7 @@ canciones_por_artista_vene_menor <- aggregate(uno~artista, data=venezuela_menor,
 artistas.venemenor <- merge(artistas.venemenor, canciones_por_artista_vene_menor, by=c("artista"), all.x=TRUE)
 
 gg3 <-ggplot (artistas.venemenor, aes(x=genero_rec, y=uno, fill=genero_rec)) + 
-  geom_bar(stat="identity", position="stack") + xlab("GÈnero musical") + ylab("Cantidad de canciones en top 50") +
+  geom_bar(stat="identity", position="stack") + xlab("G√©nero musical") + ylab("Cantidad de canciones en top 50") +
   ggtitle("Venezuela: canciones en modo menor") + theme(legend.position="", 
                                                         axis.text=element_text(size=12), 
                                                         axis.title=element_text(size=12)) +

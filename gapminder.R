@@ -20,7 +20,7 @@ gral <- ggplot(gapminder, aes(x = pib_per_capita, y=esperanza_de_vida, size = po
 gral <- gral + xlab ("PBI per cápita") + ylab ("Esperanza de vida")
 gral
 
-#Animación - se puede usar también transition_time, uso transition_states para obtener números sin decimales en el título
+#Animación -
 gral_t <- gral + transition_time(anio) +
   labs(title="Año: {round(frame_time)}") +  
   shadow_wake(wake_length = 0.1, alpha = FALSE)

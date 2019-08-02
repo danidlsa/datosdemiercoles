@@ -96,18 +96,23 @@ dat3 <- dat3 %>%  mutate(angle = 90 * sample(c(0, 1), n(), replace = TRUE, prob 
 
 dat3 <- dat3[order(-dat3$value),] 
 
+
+#Las 4 palabras más utilizadas quedan por fuera de la nube por estar muy despegadas en el conteo. 
+#Por eso lo bajo manualmente, para que no se pierdan. 
+		     
 head(dat3)
 dat3[1,2]<- 300
 dat3[2,2]<- 290
 dat3[3,2]<- 285
-dat3[4,2]<- 380
+dat3[4,2]<- 280
 
 head(dat3)
 
+#imagen para annotation
 peg <- readPNG("pegatina 2.png")
 g <- rasterGrob(peg, interpolate=TRUE)
 
-
+#wordcloud
 x<- ggplot(dat3,
   aes(label = variable, angle=angle, color=value, size=value)) +
   geom_text_wordcloud_area(

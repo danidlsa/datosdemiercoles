@@ -107,7 +107,13 @@ dat3[3,2]<- 285
 dat3[4,2]<- 280
 
 head(dat3)
+library(grid)
 
+##las pegatinas utilizadas están en:
+# https://github.com/danidlsa/datosdemiercoles/blob/master/pegatina%202.png
+# https://github.com/danidlsa/datosdemiercoles/blob/master/pegatina-dali-la-casa-de-papel_ok.png
+# descargar a wd
+		     
 #imagen para annotation
 peg <- readPNG("pegatina 2.png")
 g <- rasterGrob(peg, interpolate=TRUE)

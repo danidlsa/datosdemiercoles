@@ -70,7 +70,7 @@ dat2 <- aggregate(value ~ epi_temp + variable, dat2, FUN=sum)
 tiempos <- aggregate(tiempo_salida ~ epi_temp, dat, FUN = function(x) max(x)/60)
 dat2 <- merge(dat2, tiempos, by = "epi_temp")
 
-#Finalmente tomo una sola base, sin considerar temporadas ni episodios
+#Hasta acá va el reprocesamiento de @picanum. Finalmente tomo una sola base, sin considerar temporadas ni episodios
 
 dat3 <- aggregate(value~variable, dat2, sum)
 

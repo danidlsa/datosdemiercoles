@@ -44,7 +44,7 @@ dat$texto2 <- str_remove_all(dat$texto2, "¡")
 dat$texto2 <- str_remove_all(dat$texto2, "¿")
 
 
-dat$texto2 <- iconv(dat$texto2,from="UTF-8",to="ASCII//TRANSLIT")
+dat$texto2 <- iconv(dat$texto2,from="UTF-8",to="ASCII//TRANSLIT") #Esta es una modificación al procesamiento original: cambio tipo de encoding porque saltan errores nuevos de dejarlo como está
 
 #Creamos la matriz de términos y rescatamos aquellos que se hayan mencionado más de 50 veces a lo largo de la serie
 DTM1 <- DocumentTermMatrix(Corpus(VectorSource(t(dat$texto2))))
